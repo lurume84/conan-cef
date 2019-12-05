@@ -4,10 +4,10 @@ import os
 
 class CEFConan(ConanFile):
     name = "cef"
-    version = "3.3282.1731.gfc9a4fa"
+    version = "3.3626.1881.g628f810"
     description = "The Chromium Embedded Framework (CEF) is an open source framework for embedding a web browser engine which is based on the Chromium core"
     topics = ("conan", "cef", "chromium", "chromium-embedded-framework")
-    url = "https://github.com/bincrafters/conan-cef"
+    url = "https://github.com/lurume84/conan-cef"
     homepage = "https://bitbucket.org/chromiumembedded/cef"
     license = "BSD-3Clause"
     exports = ["LICENSE.md"]
@@ -32,6 +32,7 @@ class CEFConan(ConanFile):
         if self.settings.os == "Windows":
             platform = "windows"
         if self.settings.os == "Macos":
+            platform = "macosx"
             platform = "macosx"
         if self.settings.os == "Linux":
             platform = "linux"
@@ -132,15 +133,17 @@ class CEFConan(ConanFile):
             self.copy("libcef.so", dst="lib", src=dis_folder, keep_path=False)
             self.copy("natives_blob.bin", dst="bin", src=dis_folder, keep_path=False)
             self.copy("snapshot_blob.bin", dst="bin", src=dis_folder, keep_path=False)
+            self.copy("v8_context_snapshot.bin", dst="bin", src=dis_folder, keep_path=False)
             if self.options.use_sandbox:
                 self.copy("chrome-sandbox", dst="bin", src=dis_folder, keep_path=False)
             self.copy("*cef_dll_wrapper.a", dst="lib", keep_path=False)
         if self.settings.os == "Windows":
             # CEF binaries: (Taken from cmake/cef_variables)
-            self.copy("*.dll", dst="bin", src=dis_folder, keep_path=False)
+            self.copy("*.dll", dst="bin", src=dis_folder)
             self.copy("libcef.lib", dst="lib", src=dis_folder, keep_path=False)
             self.copy("natives_blob.bin", dst="bin", src=dis_folder, keep_path=False)
             self.copy("snapshot_blob.bin", dst="bin", src=dis_folder, keep_path=False)
+            self.copy("v8_context_snapshot.bin", dst="bin", src=dis_folder, keep_path=False)
             if self.options.use_sandbox:
                 self.copy("cef_sandbox.lib", dst="lib", src=dis_folder, keep_path=False)
             self.copy("*cef_dll_wrapper.lib", dst="lib", keep_path=False)  # libcef_dll_wrapper is somewhere else
