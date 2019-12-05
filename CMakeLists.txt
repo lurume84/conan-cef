@@ -29,6 +29,8 @@ if(USE_SANDBOX)
     add_definitions(-DCEF_USE_SANDBOX)
 endif()
 
+add_definitions(-DNOMINMAX)
+
 # Add the CEF binary distribution's cmake/ directory to the module path.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CEF_ROOT}/cmake")
 message(STATUS "MOUDLE PATH: ${CMAKE_MODULE_PATH}")
@@ -46,3 +48,5 @@ include_directories(${CEF_INCLUDE_PATH})
 
 # Include the libcef_dll_wrapper target (executes libcef_dll/CMakeLists.txt).
 add_subdirectory(${CEF_LIBCEF_DLL_WRAPPER_PATH} libcef_dll_wrapper)
+
+install(TARGETS libcef_dll_wrapper)
